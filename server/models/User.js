@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const res = require('express/lib/response');
 const saltRounds = 10;
+// const moment = require("moment");
 
 const userSchema = mongoose.Schema({
     name: {
@@ -63,7 +63,7 @@ userSchema.methods.comparePassword = function(plainPassword, callback) {
 userSchema.methods.generateToken = function(callback) {
     var user = this;
     var token = jwt.sign(user._id.toHexString(), 'secretToken');
-
+    
     user.token = token;
     user.save((err, user) => {
         if(err) return callback(err);
